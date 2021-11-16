@@ -1,0 +1,61 @@
+﻿#pragma once
+
+// Name: SanAndreas, Version: 1.0.0
+
+
+/*!!DEFINE!!*/
+
+/*!!HELPER_DEF!!*/
+
+/*!!HELPER_INC!!*/
+
+#ifdef _MSC_VER
+	#pragma pack(push, 0x01)
+#endif
+
+namespace CG
+{
+//---------------------------------------------------------------------------
+// Classes
+//---------------------------------------------------------------------------
+
+// Class SanAndreas.SACollisionCacheCommandlet
+// 0x0000 (FullSize[0x0080] - InheritedSize[0x0080])
+class USACollisionCacheCommandlet : public UCommandlet
+{
+public:
+
+
+	static UClass* StaticClass()
+	{
+		static UClass* ptr = UObject::FindClass("Class SanAndreas.SACollisionCacheCommandlet");
+		return ptr;
+	}
+
+
+
+};
+
+// Class SanAndreas.SanAndreasInterface
+// 0x0050 (FullSize[0x0780] - InheritedSize[0x0730])
+class USanAndreasInterface : public UGameterface
+{
+public:
+	unsigned char                                      UnknownData_PQFO[0x50];                                    // 0x0730(0x0050) MISSED OFFSET (PADDING)
+
+
+	static UClass* StaticClass()
+	{
+		static UClass* ptr = UObject::FindClass("Class SanAndreas.SanAndreasInterface");
+		return ptr;
+	}
+
+
+
+};
+
+}
+
+#ifdef _MSC_VER
+	#pragma pack(pop)
+#endif
