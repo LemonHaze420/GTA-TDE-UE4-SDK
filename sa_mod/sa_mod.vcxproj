@@ -24,6 +24,7 @@
     <ProjectGuid>{29098e0b-7574-489e-aca4-8a5a1447cbe9}</ProjectGuid>
     <RootNamespace>samod</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>sample_mod</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

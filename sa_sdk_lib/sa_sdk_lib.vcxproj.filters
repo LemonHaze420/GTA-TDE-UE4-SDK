@@ -2814,6 +2814,9 @@
     <ClInclude Include="SDK\ActorLayerUtilities_classes.h">
       <Filter>SDK</Filter>
     </ClInclude>
+    <ClInclude Include="SDK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SDK\ActorLayerUtilities_functions.cpp">
