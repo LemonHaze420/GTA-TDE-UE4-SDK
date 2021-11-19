@@ -1,10 +1,9 @@
 ﻿// Name: SanAndreas, Version: 1.0.0
 
 #include "../SDK.h"
+#include "../../VersionManager.hpp"
 #include <iostream>
 #include <sstream>
-
-
 
 /*!!HELPER_DEF!!*/
 
@@ -25,21 +24,61 @@ TUObjectArray* UObject::GObjects = nullptr;
 #if defined(EXTERNAL_PROPS)
 MemoryManager* Mem = new MemoryManager();
 #else
-bool InitSdk(const std::string& moduleName, const uintptr_t gObjectsOffset, const uintptr_t gNamesOffset)
+bool InitSdk(const std::string& moduleName, const uintptr_t gObjectsOffset = 0, const uintptr_t gNamesOffset = 0)
 {
+	auto version = GetVersion();
 	auto mBaseAddress = reinterpret_cast<uintptr_t>(GetModuleHandleA(moduleName.c_str()));
 
 	if (mBaseAddress == 0x00)
 		return false;
 	
-	UObject::GObjects = reinterpret_cast<CG::TUObjectArray*>(mBaseAddress + gObjectsOffset);
-	FName::GNames = reinterpret_cast<CG::GNAME_TYPE*>(mBaseAddress + gNamesOffset);
+	auto objectsOffset = 0, namesOffset = 0;
+	switch (version) {
+		case SA_V01_00: {
+			objectsOffset	= SA_V01_00_OBJECTS;
+			namesOffset		= SA_V01_00_NAMES;
+			break;
+		}
+		case SA_V01_01: {
+			objectsOffset	= SA_V01_01_OBJECTS;
+			namesOffset		= SA_V01_01_NAMES;
+			break;
+		}
+		case VC_V01_00: {
+			objectsOffset	= VC_V01_00_OBJECTS;
+			namesOffset		= VC_V01_00_NAMES;
+			break;
+		}
+		case VC_V01_01: {
+			objectsOffset	= VC_V01_01_OBJECTS;
+			namesOffset		= VC_V01_01_NAMES;
+			break;
+		}
+		case III_V01_00: {
+			objectsOffset	= III_V01_00_OBJECTS;
+			namesOffset		= III_V01_00_NAMES;
+			break;
+		}
+		case III_V01_01: {
+			objectsOffset	= III_V01_01_OBJECTS;
+			namesOffset		= III_V01_01_NAMES;
+			break;
+		}
+	}
 
-	return true;
+	if (objectsOffset != 0 && namesOffset != 0) {
+		UObject::GObjects = reinterpret_cast<CG::TUObjectArray*>(mBaseAddress + objectsOffset);
+		FName::GNames = reinterpret_cast<CG::GNAME_TYPE*>(mBaseAddress + namesOffset);
+	} else if(gObjectsOffset != 0 && gNamesOffset != 0) {
+		UObject::GObjects = reinterpret_cast<CG::TUObjectArray*>(mBaseAddress + gObjectsOffset);
+		FName::GNames = reinterpret_cast<CG::GNAME_TYPE*>(mBaseAddress + gNamesOffset);
+	}
+
+	return version != INVALID;
 }
 bool InitSdk()
 {
-	return InitSdk("SanAndreas.exe", 0x4EC81B0, 0x5554200);
+	return InitSdk("SanAndreas.exe");
 }
 #endif
 //---------------------------------------------------------------------------
