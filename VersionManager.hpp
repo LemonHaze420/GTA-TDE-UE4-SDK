@@ -43,7 +43,7 @@ enum Version {
 // ++UE4+Release-4.26-CL-0
 const char verBuffer[] = { 0x2B, 0x00, 0x2B, 0x00, 0x55, 0x00, 0x45, 0x00 };
 
-Version GetVersion() {
+Version GetGameVersion() {
 	Version theVersion = INVALID;
 	auto base = reinterpret_cast<uintptr_t>(GetModuleHandleA(NULL));
 	if (base) {

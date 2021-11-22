@@ -28,7 +28,7 @@ MemoryManager* Mem = new MemoryManager();
 #else
 bool InitSdk(const std::string& moduleName, const uintptr_t gObjectsOffset = 0, const uintptr_t gNamesOffset = 0)
 {
-	auto version = GetVersion();
+	Version version = GetGameVersion();
 	auto mBaseAddress = reinterpret_cast<uintptr_t>(GetModuleHandleA(moduleName.c_str()));
 
 	if (mBaseAddress == 0x00)
