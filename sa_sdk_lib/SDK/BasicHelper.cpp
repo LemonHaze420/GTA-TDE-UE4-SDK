@@ -24,10 +24,10 @@ TUObjectArray* UObject::GObjects = nullptr;
 #if defined(EXTERNAL_PROPS)
 MemoryManager* Mem = new MemoryManager();
 #else
-bool InitSdk(const std::string& moduleName, const uintptr_t gObjectsOffset = 0, const uintptr_t gNamesOffset = 0)
+bool InitSdk()
 {
 	Version version = GetGameVersion();
-	uintptr_t mBaseAddress = reinterpret_cast<uintptr_t>(GetModuleHandleA(moduleName.c_str()));
+	uintptr_t mBaseAddress = reinterpret_cast<uintptr_t>(GetModuleHandleA(NULL));
 
 	if (mBaseAddress == 0x00)
 		return false;
@@ -66,19 +66,11 @@ bool InitSdk(const std::string& moduleName, const uintptr_t gObjectsOffset = 0, 
 		}
 	}
 
-	if (objectsOffset != 0 && namesOffset != 0) {
+	if (version != Version::INVALID && (objectsOffset != 0 && namesOffset != 0)) {
 		UObject::GObjects = reinterpret_cast<CG::TUObjectArray*>(mBaseAddress + objectsOffset);
 		FName::GNames = reinterpret_cast<CG::GNAME_TYPE*>(mBaseAddress + namesOffset);
-	} else if(gObjectsOffset != 0 && gNamesOffset != 0) {
-		UObject::GObjects = reinterpret_cast<CG::TUObjectArray*>(mBaseAddress + gObjectsOffset);
-		FName::GNames = reinterpret_cast<CG::GNAME_TYPE*>(mBaseAddress + gNamesOffset);
 	}
-
 	return (version != Version::INVALID) == true;
-}
-bool InitSdk()
-{
-	return InitSdk("SanAndreas.exe");
 }
 #endif
 //---------------------------------------------------------------------------

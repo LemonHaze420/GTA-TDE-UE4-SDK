@@ -30,7 +30,6 @@ namespace CG
 #if defined(EXTERNAL_PROPS)
 extern MemoryManager* Mem;
 #else
-bool InitSdk(const std::string& moduleName, uintptr_t gObjectsOffset, uintptr_t gNamesOffset);
 bool InitSdk();
 #endif
 
