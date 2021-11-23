@@ -14,6 +14,7 @@ static bool bFlatRadar = false;
 
 static void Thread()
 {
+    printf("Thread started!\n");
     while (gThread) {
         // CTRL+R - Flat Radar Mod
         if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) && (GetAsyncKeyState('R') & 0x8000)) {
@@ -23,18 +24,17 @@ static void Thread()
                     radar->InGamePitch = 90.f;
                 }
                 printf("Enabled flat radar\n");
-                bFlatRadar = true;
                 Sleep(100);
             }
-            else if (bFlatRadar) 
+            else
             {
                 for (auto& radar : UObject::FindObjects<AGTARadar>()) {
                     radar->InGamePitch = 55.f;
                 }
                 printf("Disabled flat radar\n");
-                bFlatRadar = false;
                 Sleep(100);
             }
+            bFlatRadar = !bFlatRadar;
         }
         Sleep(10);
     }
@@ -55,22 +55,23 @@ void Attach()
 #endif
 
     if (!InitSdk()) {
+        printf("SDK couldn't be initialized!\n");
         gThread = false; 
         return;
-    }
-
+    } else {
 #ifdef _DEBUG
-    printf("SDK initialized\n");
+        printf("SDK initialized\n");
 
-    for (auto& object : UObject::FindObjects<UGameterface>()) {
-        if (!IsNameDefault(object->GetFullName())) {
-            printf("Name: %s\n", object->GetFullName().c_str());
-            printf("Version String: %ws\n", object->GetVersionString().cw_str());
+        for (auto& object : UObject::FindObjects<UGameterface>()) {
+            if (!IsNameDefault(object->GetFullName())) {
+                printf("Name: %s\n", object->GetFullName().c_str());
+                printf("Version String: %ws\n", object->GetVersionString().cw_str());
+            }
         }
-    }
 #endif
-    gThread = true;
-    CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&Thread, NULL, 0, NULL);
+        gThread = true;
+        CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&Thread, NULL, 0, NULL);
+    }
 }
 void Detach() {
     gThread = false;
