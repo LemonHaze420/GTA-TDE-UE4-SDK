@@ -34,7 +34,8 @@ static void Thread()
                 gInterface = gGameMode->GetGameterface();
         }
         if (gInterface && !gRadar) {
-            gRadar = gInterface->Radar;
+            if (gInterface->Radar)
+                gRadar = gInterface->Radar;
         } 
         if (!gRadar) {
             for (const auto& tmp : UObject::FindObjects<AGTARadar>())
