@@ -1,9 +1,7 @@
 ﻿// Name: SanAndreas, Version: 1.0.0
 
 #include "../SDK.h"
-#include "../../VersionManager.hpp"
-#include <iostream>
-#include <sstream>
+
 
 /*!!HELPER_DEF!!*/
 
@@ -12,6 +10,41 @@
 #ifdef _MSC_VER
 	#pragma pack(push, 0x01)
 #endif
+
+Version GetGameVersion() {
+	Version theVersion = Version::INVALID;
+	uintptr_t base = reinterpret_cast<uintptr_t>(GetModuleHandleA(NULL));
+	if (base) {
+		// SA
+		if (!memcmp((void*)(base + SA_V01_00_VER_STRING), UE4_VERSION_STRING, 8)) {
+			theVersion = Version::SA_V01_00;
+			LOG("Detected version SA - V01.00\n");
+		}
+		else if (!memcmp((void*)(base + SA_V01_01_VER_STRING), UE4_VERSION_STRING, 8)) {
+			theVersion = Version::SA_V01_01;
+			LOG("Detected version SA - V01.01\n");
+		}
+		// VC
+		else if (!memcmp((void*)(base + VC_V01_00_VER_STRING), UE4_VERSION_STRING, 8)) {
+			theVersion = Version::VC_V01_00;
+			LOG("Detected version VC - V01.00\n");
+		}
+		else if (!memcmp((void*)(base + VC_V01_01_VER_STRING), UE4_VERSION_STRING, 8)) {
+			theVersion = Version::VC_V01_01;
+			LOG("Detected version VC - V01.01\n");
+		}
+		// III
+		else if (!memcmp((void*)(base + III_V01_00_VER_STRING), UE4_VERSION_STRING, 8)) {
+			theVersion = Version::III_V01_00;
+			LOG("Detected version III - V01.00\n");
+		}
+		else if (!memcmp((void*)(base + III_V01_01_VER_STRING), UE4_VERSION_STRING, 8)) {
+			theVersion = Version::III_V01_01;
+			LOG("Detected version III - V01.01\n");
+		}
+	}
+	return theVersion;
+}
 
 namespace CG
 {

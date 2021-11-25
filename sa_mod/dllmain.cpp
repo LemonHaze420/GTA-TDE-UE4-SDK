@@ -1,7 +1,11 @@
 #include "pch.h"
-#include "SDK.h"
 
 #define MOD_STRING "Flat Radar Mod"
+//#define CONSOLE_IN_RELEASE                // Enables console in Release configuration
+//#define NO_LOG_IN_RELEASE                 // Disables logging in Release (by default the Release config. will log to 'sdk.log' in the executable directory)
+//#define NO_LOG_IN_DEBUG                   // Disables logging in Debug
+
+#include "SDK.h"
 
 using namespace CG;
 
@@ -12,81 +16,88 @@ bool IsNameDefault(std::string name) {
 static bool gThread = false;
 static bool bFlatRadar = false;
 
+static AGTAGameMode* gGameMode = nullptr;
+static UGameterface* gInterface = nullptr;
+static AGTARadar* gRadar = nullptr;
+
 static void Thread()
 {
-    printf("Thread started!\n");
+    LOG("Thread started!");
+
     while (gThread) {
-        // CTRL+R - Flat Radar Mod
-        if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) && (GetAsyncKeyState('R') & 0x8000)) {
-            if (!bFlatRadar) 
-            {
-                for (auto& radar : UObject::FindObjects<AGTARadar>()) {
-                    radar->InGamePitch = 90.f;
+        if (!gGameMode) {
+            for (const auto& gameMode : UObject::FindObjects<AGTAGameMode>())
+                gGameMode = gameMode;
+        } 
+        if (gGameMode && !gInterface) {
+            if (gGameMode->GetGameterface())
+                gInterface = gGameMode->GetGameterface();
+        }
+        if (gInterface && !gRadar) {
+            gRadar = gInterface->Radar;
+        } 
+        if (!gRadar) {
+            for (const auto& tmp : UObject::FindObjects<AGTARadar>())
+                gRadar = tmp;
+        }
+
+        if (gGameMode && gInterface) {
+            // CTRL+R - Flat Radar Mod
+            if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) && (GetAsyncKeyState('R') & 0x8000)) {
+                if (gRadar) {
+                    gRadar->InGamePitch = (!bFlatRadar ? 90.f : 55.f);
+
+                    bFlatRadar = !bFlatRadar;
+                    LOG("%s flat radar", bFlatRadar ? "Enabled" : "Disabled");
                 }
-                printf("Enabled flat radar\n");
+                else LOG("No radar instance could be found!");
+
                 Sleep(100);
             }
-            else
-            {
-                for (auto& radar : UObject::FindObjects<AGTARadar>()) {
-                    radar->InGamePitch = 55.f;
-                }
-                printf("Disabled flat radar\n");
-                Sleep(100);
-            }
-            bFlatRadar = !bFlatRadar;
         }
         Sleep(10);
     }
 }
 
-
 void Attach()
 {
-    Sleep(2000);
+    LOG("Attached!");
 
-#ifdef _DEBUG
-    AllocConsole();
-    freopen("CONIN$", "r", stdin);
-    freopen("CONOUT$", "w", stdout);
-    freopen("CONOUT$", "w", stderr);
-    SetConsoleTitleA(MOD_STRING);
-    printf("Allocated console\n");
-#endif
+    Sleep(20 * 1000);   // 20sec. delay to ensure the engine is brought up before we run our code.
+
+#   if defined(_DEBUG) || defined(CONSOLE_IN_RELEASE)
+        AllocConsole();
+        freopen("CONIN$", "r", stdin);
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+        SetConsoleTitleA(MOD_STRING);
+        LOG("Allocated console\n");
+#   endif
 
     if (!InitSdk()) {
-        printf("SDK couldn't be initialized!\n");
+        LOG("SDK couldn't be initialized!");
         gThread = false; 
         return;
     } else {
-#ifdef _DEBUG
-        printf("SDK initialized\n");
-
-        for (auto& object : UObject::FindObjects<UGameterface>()) {
-            if (!IsNameDefault(object->GetFullName())) {
-                printf("Name: %s\n", object->GetFullName().c_str());
-                printf("Version String: %ws\n", object->GetVersionString().cw_str());
-            }
-        }
-#endif
+        LOG("SDK initialized");
         gThread = true;
         CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)&Thread, NULL, 0, NULL);
     }
 }
-void Detach() {
+void Detach() 
+{
+    LOG("Detached!");
     gThread = false;
 }
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  dwReason, LPVOID lpReserved)
 {
-    switch (dwReason)
-    {
-    case DLL_PROCESS_ATTACH:
-        Attach();
-        break;
-    case DLL_PROCESS_DETACH:
-        Detach();
-        break;
+    switch (dwReason) {
+        case DLL_PROCESS_ATTACH:
+            Attach();
+            break;
+        case DLL_PROCESS_DETACH:
+            Detach();
+            break;
     }
     return TRUE;
 }
-
