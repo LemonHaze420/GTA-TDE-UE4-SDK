@@ -13,17 +13,19 @@
 
 #ifdef _DEBUG																																											
 	#ifndef NO_LOG_IN_DEBUG																																								
-		#define LOG(...)	    char* b = new char[LOG_BUFFER_SIZE];																													\
-								if (b) {																																				\
-									memset(b, 0x00, LOG_BUFFER_SIZE);																													\
-									sprintf_s(b, LOG_BUFFER_SIZE, __VA_ARGS__);																											\
-									std::time_t t_t = time(NULL);																														\
-									struct tm timeInfo;																																	\
-									localtime_s(&timeInfo, &t_t);																														\
-									char* t = new char[1024];																															\
-									memset(t, 0x00, 1024);																																\
-									sprintf_s(t, 1024, "[%02d:%02d %02d/%02d/%04d]", timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_mday, timeInfo.tm_mon, 1900 + timeInfo.tm_year);	\
-									printf("%s %s\n", t, b);																															\
+		#define LOG(...)	    {																																							\
+									char* b = new char[LOG_BUFFER_SIZE];																													\
+									if (b) {																																				\
+										memset(b, 0x00, LOG_BUFFER_SIZE);																													\
+										sprintf_s(b, LOG_BUFFER_SIZE, __VA_ARGS__);																											\
+										std::time_t t_t = time(NULL);																														\
+										struct tm timeInfo;																																	\
+										localtime_s(&timeInfo, &t_t);																														\
+										char* t = new char[1024];																															\
+										memset(t, 0x00, 1024);																																\
+										sprintf_s(t, 1024, "[%02d:%02d %02d/%02d/%04d]", timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_mday, timeInfo.tm_mon, 1900 + timeInfo.tm_year);	\
+										printf("%s %s\n", t, b);																															\
+									}																																						\
 								}
 	#else
 		#define LOG(...) //
