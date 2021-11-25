@@ -24,6 +24,8 @@ static void Thread()
 {
     LOG("Thread started!");
 
+    Sleep(18 * 1000);   // 18sec. delay to ensure the engine is brought up before we run our code.
+
     while (gThread) {
         if (!gGameMode) {
             for (const auto& gameMode : UObject::FindObjects<AGTAGameMode>())
@@ -42,7 +44,7 @@ static void Thread()
                 gRadar = tmp;
         }
 
-        if (gGameMode && gInterface) {
+        if (gRadar) {
             // CTRL+R - Flat Radar Mod
             if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) && (GetAsyncKeyState('R') & 0x8000)) {
                 if (gRadar) {
@@ -64,7 +66,7 @@ void Attach()
 {
     LOG("Attached!");
 
-    Sleep(20 * 1000);   // 20sec. delay to ensure the engine is brought up before we run our code.
+    Sleep(2 * 1000);   // 2sec. delay to ensure the engine is brought up before we run our code.
 
 #   if defined(_DEBUG) || defined(CONSOLE_IN_RELEASE)
         AllocConsole();
