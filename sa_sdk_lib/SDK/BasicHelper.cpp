@@ -18,29 +18,29 @@ Version GetGameVersion() {
 		// SA
 		if (!memcmp((void*)(base + SA_V01_00_VER_STRING), UE4_VERSION_STRING, 8)) {
 			theVersion = Version::SA_V01_00;
-			LOG("Detected version SA - V01.00\n");
+			LOG("Detected version SA - V01.00");
 		}
 		else if (!memcmp((void*)(base + SA_V01_01_VER_STRING), UE4_VERSION_STRING, 8)) {
 			theVersion = Version::SA_V01_01;
-			LOG("Detected version SA - V01.01\n");
+			LOG("Detected version SA - V01.01");
 		}
 		// VC
 		else if (!memcmp((void*)(base + VC_V01_00_VER_STRING), UE4_VERSION_STRING, 8)) {
 			theVersion = Version::VC_V01_00;
-			LOG("Detected version VC - V01.00\n");
+			LOG("Detected version VC - V01.00");
 		}
 		else if (!memcmp((void*)(base + VC_V01_01_VER_STRING), UE4_VERSION_STRING, 8)) {
 			theVersion = Version::VC_V01_01;
-			LOG("Detected version VC - V01.01\n");
+			LOG("Detected version VC - V01.01");
 		}
 		// III
 		else if (!memcmp((void*)(base + III_V01_00_VER_STRING), UE4_VERSION_STRING, 8)) {
 			theVersion = Version::III_V01_00;
-			LOG("Detected version III - V01.00\n");
+			LOG("Detected version III - V01.00");
 		}
 		else if (!memcmp((void*)(base + III_V01_01_VER_STRING), UE4_VERSION_STRING, 8)) {
 			theVersion = Version::III_V01_01;
-			LOG("Detected version III - V01.01\n");
+			LOG("Detected version III - V01.01");
 		}
 	}
 	return theVersion;
