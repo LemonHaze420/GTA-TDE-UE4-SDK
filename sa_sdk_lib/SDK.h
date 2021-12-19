@@ -23,7 +23,7 @@
 										localtime_s(&timeInfo, &t_t);																														\
 										char* t = new char[1024];																															\
 										memset(t, 0x00, 1024);																																\
-										sprintf_s(t, 1024, "[%02d:%02d %02d/%02d/%04d]", timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_mday, timeInfo.tm_mon, 1900 + timeInfo.tm_year);	\
+										sprintf_s(t, 1024, "[%02d:%02d %02d/%02d/%04d]", timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_mday, timeInfo.tm_mon+1, 1900 + timeInfo.tm_year);	\
 										printf("%s %s\n", t, b);																															\
 									}																																						\
 								}
@@ -43,7 +43,7 @@
 																localtime_s(&timeInfo, &t_t);																														\
 																char* t = new char[1024];																															\
 																memset(t, 0x00, 1024);																																\
-																sprintf_s(t, 1024, "[%02d:%02d %02d/%02d/%04d]", timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_mday, timeInfo.tm_mon, 1900 + timeInfo.tm_year);	\
+																sprintf_s(t, 1024, "[%02d:%02d %02d/%02d/%04d]", timeInfo.tm_hour, timeInfo.tm_min, timeInfo.tm_mday, timeInfo.tm_mon+1, 1900 + timeInfo.tm_year);	\
 																o << std::string(t) << " " << std::string(b) << std::endl;																							\
 																printf("%s %s\n", t, b);																															\
 																o.close();																																			\
