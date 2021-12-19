@@ -5,10 +5,8 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample_mod", "sa_mod\sa_mod.vcxproj", "{29098E0B-7574-489E-ACA4-8A5A1447CBE9}"
 	ProjectSection(ProjectDependencies) = postProject
-		{B4361B09-646D-4165-98C0-CA6D8E7945A9} = {B4361B09-646D-4165-98C0-CA6D8E7945A9}
 		{6A0EE938-1F2F-4363-BB26-C0C706C7071E} = {6A0EE938-1F2F-4363-BB26-C0C706C7071E}
 		{F142A341-5EE0-442D-A15F-98AE9B48DBAE} = {F142A341-5EE0-442D-A15F-98AE9B48DBAE}
-		{EAA6C786-CD02-4071-B8A9-DBFBA3336ACB} = {EAA6C786-CD02-4071-B8A9-DBFBA3336ACB}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sa_sdk_lib", "sa_sdk_lib\sa_sdk_lib.vcxproj", "{6A0EE938-1F2F-4363-BB26-C0C706C7071E}"
@@ -24,6 +22,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MinHook", "MinHook", "{A8848CD1-6391-48F5-9A12-5BCA1A68B884}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMinHook", "minhook\build\VC16\libMinHook.vcxproj", "{F142A341-5EE0-442D-A15F-98AE9B48DBAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hooking.Patterns", "Hooking.Patterns", "{04E4AD95-CE50-458F-B6C4-4C2BC6CA34DD}"
+	ProjectSection(SolutionItems) = preProject
+		vendor\Hooking.Patterns\Hooking.Patterns.cpp = vendor\Hooking.Patterns\Hooking.Patterns.cpp
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +64,7 @@ Global
 		{EAA6C786-CD02-4071-B8A9-DBFBA3336ACB} = {694AB28C-9AED-4F8B-B95E-D088D06AC4D1}
 		{A8848CD1-6391-48F5-9A12-5BCA1A68B884} = {CB7C023C-68F8-498D-AA0F-4D9AD5C693CD}
 		{F142A341-5EE0-442D-A15F-98AE9B48DBAE} = {A8848CD1-6391-48F5-9A12-5BCA1A68B884}
+		{04E4AD95-CE50-458F-B6C4-4C2BC6CA34DD} = {CB7C023C-68F8-498D-AA0F-4D9AD5C693CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E00EE2FD-14DF-4FAE-9F6E-A1819C02E2A7}
