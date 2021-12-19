@@ -56,8 +56,6 @@
 	#endif
 #endif
 
-#include "../VersionManager.hpp"
-
 #include "SDK/BasicHelper.h"
 
 #include "SDK/CoreUObject_structs.h"

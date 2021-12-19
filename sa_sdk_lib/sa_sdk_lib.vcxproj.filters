@@ -3752,5 +3752,8 @@
     <ClCompile Include="SDK\WmfMediaFactory_functions.cpp">
       <Filter>SDK</Filter>
     </ClCompile>
+    <ClCompile Include="..\vendor\Hooking.Patterns\Hooking.Patterns.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

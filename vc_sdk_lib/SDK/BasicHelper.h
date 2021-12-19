@@ -9,6 +9,8 @@
 #include <unordered_map>
 #include <Windows.h>
 
+#include "../../VersionManager.hpp"
+
 #define GOBJECTS_CHUNKS
 #define FNAME_POOL
 #define UE4
@@ -30,7 +32,7 @@ namespace CG
 #if defined(EXTERNAL_PROPS)
 extern MemoryManager* Mem;
 #else
-bool InitSdk();
+bool InitSdk(GameDetails details);
 #endif
 
 template<typename Fn>

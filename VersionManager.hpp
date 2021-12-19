@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Version {
+enum class eVersion {
 	INVALID,
 
 	III_V01_00,
@@ -10,7 +10,25 @@ enum class Version {
 	VC_V01_01,
 
 	SA_V01_00,
-	SA_V01_01
+	SA_V01_01,
+
+	Auto
+};
+enum class eGame {
+	III,
+	VC,
+	SA,
+	Unknown
+};
+struct Offsets {
+	unsigned int objects = 0;
+	unsigned int names = 0;
+};
+class GameDetails {
+public:
+	eGame game = eGame::Unknown;
+	eVersion version = eVersion::INVALID;
+	Offsets offsets;
 };
 
 // San Andreas
@@ -43,4 +61,4 @@ enum class Version {
 // ++UE4+Release-4.26-CL-0
 #define UE4_VERSION_STRING		"\x2B\x00\x2B\x00\x55\x00\x45\x00"
 
-Version GetGameVersion();
+GameDetails GetGameDetails();
